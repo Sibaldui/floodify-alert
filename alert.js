@@ -17,17 +17,14 @@ async function checkFloodify() {
 
     const data = await res.json();
 
-    console.log("Floodify response:", JSON.stringify(data));
-
+    const available = data.availablePostsCount > 0 ? 1 : 0;
 
     console.log(
-  "Checked Floodify:",
-  data.availablePostsCount,
-  "posts available at",
-  new Date().toLocaleTimeString()
-);
-
-
+      "Checked Floodify:",
+      data.availablePostsCount,
+      "posts available at",
+      new Date().toLocaleTimeString()
+    );
 
     if (available > lastAvailable) {
       await fetch(WEBHOOK_URL, {
@@ -51,5 +48,6 @@ async function checkFloodify() {
     console.log("Error:", err.message);
   }
 }
+
 
 setInterval(checkFloodify, 15000);
