@@ -20,7 +20,8 @@ async function checkFloodify() {
     console.log("Floodify response:", JSON.stringify(data));
 
 
-    const available = data.available === true ? 1 : 0;
+    const available = data.availablePostsCount > 0 ? 1 : 0;
+
 
     if (available > lastAvailable) {
       await fetch(WEBHOOK_URL, {
