@@ -17,7 +17,8 @@ async function checkFloodify() {
 
     const data = await res.json();
 
-    console.log("Checked Floodify:", data.available, "at", new Date().toLocaleTimeString());
+    console.log("Floodify response:", JSON.stringify(data));
+
 
     const available = data.available === true ? 1 : 0;
 
