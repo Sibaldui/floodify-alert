@@ -20,7 +20,13 @@ async function checkFloodify() {
     console.log("Floodify response:", JSON.stringify(data));
 
 
-    const available = data.availablePostsCount > 0 ? 1 : 0;
+    console.log(
+  "Checked Floodify:",
+  data.availablePostsCount,
+  "posts available at",
+  new Date().toLocaleTimeString()
+);
+
 
 
     if (available > lastAvailable) {
