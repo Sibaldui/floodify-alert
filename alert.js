@@ -31,7 +31,8 @@ async function checkFloodify() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: "🚨 **Manual posts available!**",
+          content: "@everyone 🚨 **Manual posts available!**",
+
           embeds: [{
             title: "Floodify Alert",
             fields: [
