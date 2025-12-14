@@ -17,7 +17,7 @@ async function checkFloodify() {
 
     const data = await res.json();
 
-    const available = data.availablePostsCount > 0 ? 1 : 0;
+    const available = 1;
 
     console.log(
       "Checked Floodify:",
