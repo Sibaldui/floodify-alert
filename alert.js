@@ -27,22 +27,24 @@ async function checkFloodify() {
     );
 
     if (available > lastAvailable) {
-      await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: "@everyone 🚨 **Manual posts available!**",
+  await fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: `@everyone 🚨 **Manual posts available!**\n**Available posts:** ${data.availablePostsCount}`,
 
-          embeds: [{
-            title: "Floodify Alert",
-            fields: [
-              { name: "Status", value: "Manual posts available ✅", inline: true }
-            ],
-            timestamp: new Date()
-          }]
-        })
-      });
-    }
+      embeds: [{
+        title: "Floodify Alert",
+        fields: [
+          { name: "Status", value: "Manual posts available ✅", inline: true },
+          { name: "Available Posts", value: String(data.availablePostsCount), inline: true }
+        ],
+        timestamp: new Date()
+      }]
+    })
+  });
+}
+
 
     lastAvailable = available;
   } catch (err) {
