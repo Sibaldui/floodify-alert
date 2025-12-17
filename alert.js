@@ -17,7 +17,7 @@ async function checkFloodify() {
 
     const data = await res.json();
 
-    const available = data.availablePostsCount > 0 ? 1 : 0;
+    const available = data.availablePostsCount;  // Use the actual available post count
 
     console.log(
       "Checked Floodify:",
@@ -27,30 +27,28 @@ async function checkFloodify() {
     );
 
     if (available > lastAvailable) {
-  await fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      content: `@everyone 🚨 **Manual posts available!**\n**Available posts:** ${data.availablePostsCount}`,
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: `@everyone 🚨 **Manual posts available!**\n**Available posts:** ${data.availablePostsCount}`,  // Show available posts in the message
 
-      embeds: [{
-        title: "Floodify Alert",
-        fields: [
-          { name: "Status", value: "Manual posts available ✅", inline: true },
-          { name: "Available Posts", value: String(data.availablePostsCount), inline: true }
-        ],
-        timestamp: new Date()
-      }]
-    })
-  });
-}
-
+          embeds: [{
+            title: "Floodify Alert",
+            fields: [
+              { name: "Status", value: "Manual posts available ✅", inline: true },
+              { name: "Available Posts", value: String(data.availablePostsCount), inline: true }  // Embed will show available posts
+            ],
+            timestamp: new Date()
+          }]
+        })
+      });
+    }
 
     lastAvailable = available;
   } catch (err) {
     console.log("Error:", err.message);
   }
 }
-
 
 setInterval(checkFloodify, 15000);
