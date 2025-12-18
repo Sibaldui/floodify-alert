@@ -15,9 +15,14 @@ async function checkFloodify() {
       }
     });
 
-    const data = await res.json();
+    // Check if the response status is 401 (Unauthorized)
+    if (res.status === 401) {
+      console.log("🚨 Cookie is expired or invalid!");
+      return;  // Exit the function if cookie is expired
+    }
 
-    const available = data.availablePostsCount;  // Use the actual available post count
+    const data = await res.json();
+    const available = data.availablePostsCount;
 
     console.log(
       "Checked Floodify:",
@@ -31,13 +36,12 @@ async function checkFloodify() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: `@everyone 🚨 **Manual posts available!**\n**Available posts:** ${data.availablePostsCount}`,  // Show available posts in the message
-
+          content: `@everyone 🚨 **Manual posts available!**\n**Available posts:** ${data.availablePostsCount}`,
           embeds: [{
             title: "Floodify Alert",
             fields: [
               { name: "Status", value: "Manual posts available ✅", inline: true },
-              { name: "Available Posts", value: String(data.availablePostsCount), inline: true }  // Embed will show available posts
+              { name: "Available Posts", value: String(data.availablePostsCount), inline: true }
             ],
             timestamp: new Date()
           }]
